@@ -16,6 +16,7 @@ func TestWithPostgres(t *testing.T) {
 		Image:        "postgres:13-alpine",
 		ExposedPorts: []string{"5432/tcp"},
 		WaitingFor:   wait.ForLog("database system is ready to accept connections").WithStartupTimeout(time.Minute * 5),
+		Env:          map[string]string{"POSTGRES_HOST_AUTH_METHOD": "trust"},
 	}
 	postgresC, err := testcontainers.GenericContainer(ctx, testcontainers.GenericContainerRequest{
 		ContainerRequest: req,
